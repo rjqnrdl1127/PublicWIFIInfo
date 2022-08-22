@@ -5,156 +5,156 @@ import java.sql.Date;
 public class WifiInfoVo {
 
     private Float distance;
-    private String controlNumber;
-    private String borough;
-    private String wifiName;
-    private String streetNameAddress;
-    private String detailedAddress;
-    private String installationLocation;
-    private String installationType;
-    private String installationAgency;
-    private String serviceClassification;
-    private String typeOfNet;
-    private String yearOfInstallation;
-    private String indoorOutdoor;
-    private String wifiConnectionEnvironment;
-    private Float xCoordinate;
-    private Float yCoordinate;
-    private Date workingDate;
-
-    public Float getDistance() {
-        return distance;
-    }
-
-    public String getControlNumber() {
-        return controlNumber;
-    }
-
-    public String getBorough() {
-        return borough;
-    }
-
-    public String getWifiName() {
-        return wifiName;
-    }
-
-    public String getStreetNameAddress() {
-        return streetNameAddress;
-    }
-
-    public String getDetailedAddress() {
-        return detailedAddress;
-    }
-
-    public String getInstallationLocation() {
-        return installationLocation;
-    }
-
-    public String getInstallationType() {
-        return installationType;
-    }
-
-    public String getInstallationAgency() {
-        return installationAgency;
-    }
-
-    public String getServiceClassification() {
-        return serviceClassification;
-    }
-
-    public String getTypeOfNet() {
-        return typeOfNet;
-    }
-
-    public String getYearOfInstallation() {
-        return yearOfInstallation;
-    }
-
-    public String getIndoorOutdoor() {
-        return indoorOutdoor;
-    }
-
-    public String getWifiConnectionEnvironment() {
-        return wifiConnectionEnvironment;
-    }
-
-    public Float getxCoordinate() {
-        return xCoordinate;
-    }
-
-    public Float getyCoordinate() {
-        return yCoordinate;
-    }
-
-    public Date getWorkingDate() {
-        return workingDate;
-    }
+    private String XSWifiManageNo;
+    private String XSWifiWRDOFC;
+    private String XSWifiMainNM;
+    private String XSWifiADRES1;
+    private String XSWifiADRES2;
+    private String XSWifiInstallFloor;
+    private String XSWifiInstallType;
+    private String XSWifiInstallMBY;
+    private String XSWifiServiceSE;
+    private String XSWifiCMCWR;
+    private String XSWifiCNSTCYear;
+    private String XSWifiInoutDoor;
+    private String XSWifiREMARS3;
+    private Float lat;
+    private Float lnt;
+    private Date workDatetime;
 
     public void setDistance(Float distance) {
         this.distance = distance;
     }
 
-    public void setControlNumber(String controlNumber) {
-        this.controlNumber = controlNumber;
+    public void setXSWifiManageNo(String XSWifiManageNo) {
+        this.XSWifiManageNo = XSWifiManageNo;
     }
 
-    public void setBorough(String borough) {
-        this.borough = borough;
+    public void setXSWifiWRDOFC(String XSWifiWRDOFC) {
+        this.XSWifiWRDOFC = XSWifiWRDOFC;
     }
 
-    public void setWifiName(String wifiName) {
-        this.wifiName = wifiName;
+    public void setXSWifiMainNM(String XSWifiMainNM) {
+        this.XSWifiMainNM = XSWifiMainNM;
     }
 
-    public void setStreetNameAddress(String streetNameAddress) {
-        this.streetNameAddress = streetNameAddress;
+    public void setXSWifiADRES1(String XSWifiADRES1) {
+        this.XSWifiADRES1 = XSWifiADRES1;
     }
 
-    public void setDetailedAddress(String detailedAddress) {
-        this.detailedAddress = detailedAddress;
+    public void setXSWifiADRES2(String XSWifiADRES2) {
+        this.XSWifiADRES2 = XSWifiADRES2;
     }
 
-    public void setInstallationLocation(String installationLocation) {
-        this.installationLocation = installationLocation;
+    public void setXSWifiInstallFloor(String XSWifiInstallFloor) {
+        this.XSWifiInstallFloor = XSWifiInstallFloor;
     }
 
-    public void setInstallationType(String installationType) {
-        this.installationType = installationType;
+    public void setXSWifiInstallType(String XSWifiInstallType) {
+        this.XSWifiInstallType = XSWifiInstallType;
     }
 
-    public void setInstallationAgency(String installationAgency) {
-        this.installationAgency = installationAgency;
+    public void setXSWifiInstallMBY(String XSWifiInstallMBY) {
+        this.XSWifiInstallMBY = XSWifiInstallMBY;
     }
 
-    public void setServiceClassification(String serviceClassification) {
-        this.serviceClassification = serviceClassification;
+    public void setXSWifiServiceSE(String XSWifiServiceSE) {
+        this.XSWifiServiceSE = XSWifiServiceSE;
     }
 
-    public void setTypeOfNet(String typeOfNet) {
-        this.typeOfNet = typeOfNet;
+    public void setXSWifiCMCWR(String XSWifiCMCWR) {
+        this.XSWifiCMCWR = XSWifiCMCWR;
     }
 
-    public void setYearOfInstallation(String yearOfInstallation) {
-        this.yearOfInstallation = yearOfInstallation;
+    public void setXSWifiCNSTCYear(String XSWifiCNSTCYear) {
+        this.XSWifiCNSTCYear = XSWifiCNSTCYear;
     }
 
-    public void setIndoorOutdoor(String indoorOutdoor) {
-        this.indoorOutdoor = indoorOutdoor;
+    public void setXSWifiInoutDoor(String XSWifiInoutDoor) {
+        this.XSWifiInoutDoor = XSWifiInoutDoor;
     }
 
-    public void setWifiConnectionEnvironment(String wifiConnectionEnvironment) {
-        this.wifiConnectionEnvironment = wifiConnectionEnvironment;
+    public void setXSWifiREMARS3(String XSWifiREMARS3) {
+        this.XSWifiREMARS3 = XSWifiREMARS3;
     }
 
-    public void setxCoordinate(Float xCoordinate) {
-        this.xCoordinate = xCoordinate;
+    public void setLat(Float lat) {
+        this.lat = lat;
     }
 
-    public void setyCoordinate(Float yCoordinate) {
-        this.yCoordinate = yCoordinate;
+    public void setLnt(Float lnt) {
+        this.lnt = lnt;
     }
 
-    public void setWorkingDate(Date workingDate) {
-        this.workingDate = workingDate;
+    public void setWorkDatetime(Date workDatetime) {
+        this.workDatetime = workDatetime;
+    }
+
+    public Float getDistance() {
+        return distance;
+    }
+
+    public String getXSWifiManageNo() {
+        return XSWifiManageNo;
+    }
+
+    public String getXSWifiWRDOFC() {
+        return XSWifiWRDOFC;
+    }
+
+    public String getXSWifiMainNM() {
+        return XSWifiMainNM;
+    }
+
+    public String getXSWifiADRES1() {
+        return XSWifiADRES1;
+    }
+
+    public String getXSWifiADRES2() {
+        return XSWifiADRES2;
+    }
+
+    public String getXSWifiInstallFloor() {
+        return XSWifiInstallFloor;
+    }
+
+    public String getXSWifiInstallType() {
+        return XSWifiInstallType;
+    }
+
+    public String getXSWifiInstallMBY() {
+        return XSWifiInstallMBY;
+    }
+
+    public String getXSWifiServiceSE() {
+        return XSWifiServiceSE;
+    }
+
+    public String getXSWifiCMCWR() {
+        return XSWifiCMCWR;
+    }
+
+    public String getXSWifiCNSTCYear() {
+        return XSWifiCNSTCYear;
+    }
+
+    public String getXSWifiInoutDoor() {
+        return XSWifiInoutDoor;
+    }
+
+    public String getXSWifiREMARS3() {
+        return XSWifiREMARS3;
+    }
+
+    public Float getLat() {
+        return lat;
+    }
+
+    public Float getLnt() {
+        return lnt;
+    }
+
+    public Date getWorkDatetime() {
+        return workDatetime;
     }
 }
