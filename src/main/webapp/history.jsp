@@ -1,16 +1,64 @@
-<%--
+<%@ page import="com.example.publicwifiinfo.dao.WifiInfoDAO" %>
+<%@ page import="com.example.publicwifiinfo.dao.LookupHistoryDAO" %>
+<%@ page import="com.example.publicwifiinfo.model.LookupHistoryVo" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: seongmin
   Date: 2022/08/19
   Time: 8:39 PM
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
+<%
+    LookupHistoryDAO dao = new LookupHistoryDAO();
+    List<LookupHistoryVo> list = dao.LookUplist();
+%>
 <html>
 <head>
     <title>와이파이 정보 구하기</title>
+    <style>
+        #customers {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td, #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even){background-color: #f2f2f2;}
+
+        #customers tr:hover {background-color: #ddd;}
+
+        #customers th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #04AA6D;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
+    <table id="customers">
+        <tr>
+            <th>ID</th>
+            <th>X좌표</th>
+            <th>Y좌표</th>
+            <th>조회일자</th>
+            <th>비고</th>
+        </tr>
+        <c:set var="lookupList" value="<%= list%>"
+        <c:forEach var="lookup" items="${lookupList}">
+            <tr>
+                <td>${lookup.id}</td>
+                <td>${lookup.xCoordinate}</td>
+                <td>${lookup.yCoordinate}</td>
+                <td>${lookup.inquiryDate}</td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

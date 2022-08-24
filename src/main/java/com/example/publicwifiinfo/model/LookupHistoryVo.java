@@ -1,23 +1,24 @@
-package model;
+package com.example.publicwifiinfo.model;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
-public class LocationHistoryVo {
+public class LookupHistoryVo {
 
     private Long id;
-    private Float xCoordinate;
-    private Float yCoordinate;
+    private BigDecimal xCoordinate;
+    private BigDecimal yCoordinate;
     private Date inquiryDate;
 
     public Long getId() {
         return id;
     }
 
-    public Float getxCoordinate() {
+    public BigDecimal getxCoordinate() {
         return xCoordinate;
     }
 
-    public Float getyCoordinate() {
+    public BigDecimal getyCoordinate() {
         return yCoordinate;
     }
 
@@ -29,11 +30,11 @@ public class LocationHistoryVo {
         this.id = id;
     }
 
-    public void setxCoordinate(Float xCoordinate) {
+    public void setxCoordinate(BigDecimal xCoordinate) {
         this.xCoordinate = xCoordinate;
     }
 
-    public void setyCoordinate(Float yCoordinate) {
+    public void setyCoordinate(BigDecimal yCoordinate) {
         this.yCoordinate = yCoordinate;
     }
 
