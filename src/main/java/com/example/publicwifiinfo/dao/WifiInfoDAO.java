@@ -1,13 +1,16 @@
 package com.example.publicwifiinfo.dao;
 
 import com.example.publicwifiinfo.api.ApiExplorer;
+import com.example.publicwifiinfo.model.WifiInfoVo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class WifiInfoDAO {
     private final String url = "jdbc:mysql://localhost:3306/public_wifi_info";
@@ -16,8 +19,58 @@ public class WifiInfoDAO {
     private Connection connection;
     private PreparedStatement statement;
 
-    public WifiInfoDAO() {
+    public ArrayList<WifiInfoVo> wifiList() {
+        ArrayList<WifiInfoVo> list = new ArrayList<>();
+        try {
+            connection = DriverManager.getConnection(url, userId, password);
+            String query = "select * from wifi_info";
+            statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                String XSWifiManageNo = resultSet.getString("x_swifi_mgr_no");
+                String XSWifiWRDOFC = resultSet.getString("x_swifi_wrdofc");
+                String XSWifiMainNM = resultSet.getString("x_swifi_main_nm");
+                String XSWifiADRES1 = resultSet.getString("x_swifi_adres1");
+                String XSWifiADRES2 = resultSet.getString("x_swifi_adres2");
+                String XSWifiInstallFloor = resultSet.getString("x_swifi_instl_floor");
+                String XSWifiInstallType = resultSet.getString("x_swifi_instl_ty");
+                String XSWifiInstallMBY = resultSet.getString("x_swifi_instl_mby");
+                String XSWifiServiceSE = resultSet.getString("x_swifi_svc_se");
+                String XSWifiCMCWR = resultSet.getString("x_swifi_cmcwr");
+                String XSWifiCNSTCYear = resultSet.getString("x_swifi_cnstc_year");
+                String XSWifiInoutDoor = resultSet.getString("x_swifi_inout_door");
+                String XSWifiREMARS3 = resultSet.getString("x_swifi_remars3");
+                Double lat = resultSet.getDouble("lat");
+                Double lnt = resultSet.getDouble("lnt");
+                Timestamp workDatetime = resultSet.getTimestamp("work_dttm");
+                WifiInfoVo vo = new WifiInfoVo();
+                vo.setXSWifiManageNo(XSWifiManageNo);
+                vo.setXSWifiWRDOFC(XSWifiWRDOFC);
+                vo.setXSWifiMainNM(XSWifiMainNM);
+                vo.setXSWifiADRES1(XSWifiADRES1);
+                vo.setXSWifiADRES2(XSWifiADRES2);
+                vo.setXSWifiInstallFloor(XSWifiInstallFloor);
+                vo.setXSWifiInstallType(XSWifiInstallType);
+                vo.setXSWifiInstallMBY(XSWifiInstallMBY);
+                vo.setXSWifiServiceSE(XSWifiServiceSE);
+                vo.setXSWifiCMCWR(XSWifiCMCWR);
+                vo.setXSWifiCNSTCYear(XSWifiCNSTCYear);
+                vo.setXSWifiInoutDoor(XSWifiInoutDoor);
+                vo.setXSWifiREMARS3(XSWifiREMARS3);
+                vo.setLat(lat);
+                vo.setLnt(lnt);
+                vo.setWorkDatetime(workDatetime);
+
+                list.add(vo);
+            }
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     public int saveApiData() throws IOException {
@@ -63,9 +116,9 @@ public class WifiInfoDAO {
                         String XSWifiCNSTCYear = object.getAsJsonObject().get("X_SWIFI_CNSTC_YEAR").getAsString();
                         String XSWifiInoutDoor = object.getAsJsonObject().get("X_SWIFI_INOUT_DOOR").getAsString();
                         String XSWifiREMARS3 = object.getAsJsonObject().get("X_SWIFI_REMARS3").getAsString();
-                        Float lat = object.getAsJsonObject().get("LAT").getAsFloat();
-                        Float lnt = object.getAsJsonObject().get("LNT").getAsFloat();
-                        String workDatetime = object.getAsJsonObject().get("WORK_DTTM").getAsString();
+                        Double lnt = object.getAsJsonObject().get("LNT").getAsDouble();
+                        Double lat = object.getAsJsonObject().get("LAT").getAsDouble();
+                        Timestamp workDatetime = Timestamp.valueOf(object.getAsJsonObject().get("WORK_DTTM").getAsString());
 
                         String query = "insert into wifi_info";
                         query += " (x_swifi_mgr_no, x_swifi_wrdofc, x_swifi_main_nm, x_swifi_adres1, x_swifi_adres2, x_swifi_instl_floor, x_swifi_instl_ty, x_swifi_instl_mby, x_swifi_svc_se, x_swifi_cmcwr, x_swifi_cnstc_year, x_swifi_inout_door, x_swifi_remars3, lat, lnt, work_dttm)";
@@ -85,9 +138,9 @@ public class WifiInfoDAO {
                         statement.setString(11, XSWifiCNSTCYear);
                         statement.setString(12, XSWifiInoutDoor);
                         statement.setString(13, XSWifiREMARS3);
-                        statement.setFloat(14, lat);
-                        statement.setFloat(15, lnt);
-                        statement.setString(16, workDatetime);
+                        statement.setDouble(14, lnt);
+                        statement.setDouble(15, lat);
+                        statement.setTimestamp(16, workDatetime);
                         statement.executeUpdate();
                     }
 
@@ -99,6 +152,25 @@ public class WifiInfoDAO {
             }
         }
         return totCount;
+    }
+    // 두 좌표 사이의 거리를 구하는 함수
+    // dsitance(첫번쨰 좌표의 위도, 첫번째 좌표의 경도, 두번째 좌표의 위도, 두번째 좌표의 경도)
+    private static double distance(double lat1, double lon1, double lat2, double lon2){
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1))* Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1))*Math.cos(deg2rad(lat2))*Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60*1.1515*1609.344;
+
+        return dist; //단위 meter
+    }
+    //10진수를 radian(라디안)으로 변환
+    private static double deg2rad(double deg){
+        return (deg * Math.PI/180.0);
+    }
+    //radian(라디안)을 10진수로 변환
+    private static double rad2deg(double rad){
+        return (rad * 180 / Math.PI);
     }
 
     public static void main(String[] args) throws IOException {

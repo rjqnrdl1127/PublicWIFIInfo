@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class LookupHistoryDAO {
 
@@ -39,8 +38,8 @@ public class LookupHistoryDAO {
         }
     }
 
-    public List<LookupHistoryVo> LookUplist() {
-        List<LookupHistoryVo> list = new ArrayList<>();
+    public ArrayList<LookupHistoryVo> LookUplist() {
+        ArrayList<LookupHistoryVo> list = new ArrayList<>();
         try {
             connection = DriverManager.getConnection(url, userId, password);
             String query = "select * from lookup_history";
@@ -51,7 +50,7 @@ public class LookupHistoryDAO {
                 Long id = resultSet.getLong("id");
                 BigDecimal xCoordinate = resultSet.getBigDecimal("x_coordinate");
                 BigDecimal yCoordinate = resultSet.getBigDecimal("y_coordinate");
-                Date inquiryDate = resultSet.getDate("inquiry_date");
+                Timestamp inquiryDate = resultSet.getTimestamp("inquiry_date");
                 LookupHistoryVo vo = new LookupHistoryVo();
                 vo.setId(id);
                 vo.setxCoordinate(xCoordinate);
@@ -75,7 +74,7 @@ public class LookupHistoryDAO {
             Long id = vo.getId();
             BigDecimal xCoordinate = vo.getxCoordinate();
             BigDecimal yCoordinate = vo.getyCoordinate();
-            Date inquiryDate = vo.getInquiryDate();
+            Timestamp inquiryDate = vo.getInquiryDate();
 
             String query = "insert into lookup_history";
             query += " (x_coordinate, y_coordinate)";
@@ -93,7 +92,7 @@ public class LookupHistoryDAO {
 
     public static void main(String[] args) {
         LookupHistoryDAO dao = new LookupHistoryDAO();
-        List<LookupHistoryVo> list = dao.LookUplist();
+        ArrayList<LookupHistoryVo> list = dao.LookUplist();
         for (LookupHistoryVo vo : list) {
             System.out.println(vo.getId());
             System.out.println(vo.getxCoordinate());

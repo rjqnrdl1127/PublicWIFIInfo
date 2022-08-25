@@ -1,4 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="dao" class="com.example.publicwifiinfo.dao.WifiInfoDAO"/>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,12 +49,12 @@
     </style>
 </head>
 <body>
-    <h1><%= "와이파이 정보 구하기" %></h1>
+    <h1>"와이파이 정보 구하기"</h1>
     <a href="index.jsp">홈</a> |
     <a href="history.jsp">위치 히스토리 목록</a> |
     <a href="load-wifi.jsp">OPen API 와이파이 정보 가져오기</a>
     <br>
-    <form name="location" method="get" action="aroundWifi">
+    <form method="get" action="${pageContext.request.contextPath}/index.jsp">
         LAT:<input type="text" name="lat" id="latitude" value=0.0>
         LNT:<input type="text" name="lnt" id="longitude" value=0.0>
         <input type="button" value="내 위치 가져오기" onclick="cal_location()">
@@ -77,9 +80,35 @@
             <th>Y좌표</th>
             <th>작업일자</th>
         </tr>
-        <tr>
-            <td colspan="17" align="center">위치 정보를 입력한 후에 조회해 주세요.</td>
-        </tr>
+        <c:if test="${param.lat == null || param.lnt == null}">
+            <tr>
+                <td colspan="17" align="center">위치 정보를 입력한 후에 조회해 주세요.</td>
+            </tr>
+        </c:if>
+        <c:if test="${param.lat != null && param.lnt != null}">
+            <c:set var="list" value="<%=dao.wifiList()%>"/>
+            <c:forEach var="wifi" items="${list}">
+                <tr>
+                    <td>${wifi.distance}</td>
+                    <td>${wifi.XSWifiManageNo}</td>
+                    <td>${wifi.XSWifiWRDOFC}</td>
+                    <td>${wifi.XSWifiMainNM}</td>
+                    <td>${wifi.XSWifiADRES1}</td>
+                    <td>${wifi.XSWifiADRES2}</td>
+                    <td>${wifi.XSWifiInstallFloor}</td>
+                    <td>${wifi.XSWifiInstallType}</td>
+                    <td>${wifi.XSWifiInstallMBY}</td>
+                    <td>${wifi.XSWifiServiceSE}</td>
+                    <td>${wifi.XSWifiCMCWR}</td>
+                    <td>${wifi.XSWifiCNSTCYear}</td>
+                    <td>${wifi.XSWifiInoutDoor}</td>
+                    <td>${wifi.XSWifiREMARS3}</td>
+                    <td>${wifi.lat}</td>
+                    <td>${wifi.lnt}</td>
+                    <td>${wifi.workDatetime}</td>
+                </tr>
+            </c:forEach>
+        </c:if>
     </table>
 </body>
 </html>

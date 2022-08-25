@@ -1,10 +1,11 @@
-package model;
+package com.example.publicwifiinfo.model;
 
-import java.sql.Date;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 public class WifiInfoVo {
 
-    private Float distance;
+    private Double distance;
     private String XSWifiManageNo;
     private String XSWifiWRDOFC;
     private String XSWifiMainNM;
@@ -18,11 +19,11 @@ public class WifiInfoVo {
     private String XSWifiCNSTCYear;
     private String XSWifiInoutDoor;
     private String XSWifiREMARS3;
-    private Float lat;
-    private Float lnt;
-    private Date workDatetime;
+    private Double lat;
+    private Double lnt;
+    private Timestamp workDatetime;
 
-    public void setDistance(Float distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
@@ -78,19 +79,19 @@ public class WifiInfoVo {
         this.XSWifiREMARS3 = XSWifiREMARS3;
     }
 
-    public void setLat(Float lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
-    public void setLnt(Float lnt) {
+    public void setLnt(Double lnt) {
         this.lnt = lnt;
     }
 
-    public void setWorkDatetime(Date workDatetime) {
+    public void setWorkDatetime(Timestamp workDatetime) {
         this.workDatetime = workDatetime;
     }
 
-    public Float getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
@@ -146,15 +147,15 @@ public class WifiInfoVo {
         return XSWifiREMARS3;
     }
 
-    public Float getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public Float getLnt() {
+    public Double getLnt() {
         return lnt;
     }
 
-    public Date getWorkDatetime() {
+    public Timestamp getWorkDatetime() {
         return workDatetime;
     }
 }

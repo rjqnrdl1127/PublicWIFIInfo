@@ -1,14 +1,14 @@
 package com.example.publicwifiinfo.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class LookupHistoryVo {
 
     private Long id;
     private BigDecimal xCoordinate;
     private BigDecimal yCoordinate;
-    private Date inquiryDate;
+    private Timestamp inquiryDate;
 
     public Long getId() {
         return id;
@@ -22,7 +22,7 @@ public class LookupHistoryVo {
         return yCoordinate;
     }
 
-    public Date getInquiryDate() {
+    public Timestamp getInquiryDate() {
         return inquiryDate;
     }
 
@@ -38,7 +38,7 @@ public class LookupHistoryVo {
         this.yCoordinate = yCoordinate;
     }
 
-    public void setInquiryDate(Date inquiryDate) {
+    public void setInquiryDate(Timestamp inquiryDate) {
         this.inquiryDate = inquiryDate;
     }
 }
