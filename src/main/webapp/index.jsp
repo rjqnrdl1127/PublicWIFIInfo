@@ -1,7 +1,20 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.publicwifiinfo.model.WifiInfoVo" %>
+<%@ page import="java.math.BigDecimal" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="dao" class="com.example.publicwifiinfo.dao.WifiInfoDAO"/>
-
+<jsp:useBean id="historyDao" class="com.example.publicwifiinfo.dao.LookupHistoryDAO"/>
+<%
+    Double lat = 0.0;
+    Double lnt = 0.0;
+    if (request.getParameter("lat") != null && request.getParameter("lnt") != null) {
+        lat = Double.valueOf(request.getParameter("lat"));
+        lnt = Double.valueOf(request.getParameter("lnt"));
+        historyDao.addLookUpData(BigDecimal.valueOf(lat), BigDecimal.valueOf(lnt));
+    }
+    List<WifiInfoVo> list = dao.wifiList(lat, lnt);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +67,7 @@
     <a href="history.jsp">위치 히스토리 목록</a> |
     <a href="load-wifi.jsp">OPen API 와이파이 정보 가져오기</a>
     <br>
-    <form method="get" action="${pageContext.request.contextPath}/index.jsp">
+    <form method="get" action="index.jsp">
         LAT:<input type="text" name="lat" id="latitude" value=0.0>
         LNT:<input type="text" name="lnt" id="longitude" value=0.0>
         <input type="button" value="내 위치 가져오기" onclick="cal_location()">
@@ -86,7 +99,7 @@
             </tr>
         </c:if>
         <c:if test="${param.lat != null && param.lnt != null}">
-            <c:set var="list" value="<%=dao.wifiList()%>"/>
+            <c:set var="list" value="<%=list%>"/>
             <c:forEach var="wifi" items="${list}">
                 <tr>
                     <td>${wifi.distance}</td>

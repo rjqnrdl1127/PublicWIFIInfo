@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -19,15 +18,30 @@ public class WifiInfoDAO {
     private Connection connection;
     private PreparedStatement statement;
 
-    public ArrayList<WifiInfoVo> wifiList() {
+    public WifiInfoDAO() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<WifiInfoVo> wifiList(Double myX, Double myY) throws IOException {
         ArrayList<WifiInfoVo> list = new ArrayList<>();
+        this.saveDistances(myX, myY);
         try {
             connection = DriverManager.getConnection(url, userId, password);
-            String query = "select * from wifi_info";
+
+            String query = "select * from wifi_info order by distance";
             statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
+            int i = 0;
 
-            while (resultSet.next()) {
+            while (resultSet.next()){
+                if (i == 20) {
+                    break;
+                }
+                Double distance = resultSet.getDouble("distance");
                 String XSWifiManageNo = resultSet.getString("x_swifi_mgr_no");
                 String XSWifiWRDOFC = resultSet.getString("x_swifi_wrdofc");
                 String XSWifiMainNM = resultSet.getString("x_swifi_main_nm");
@@ -45,6 +59,7 @@ public class WifiInfoDAO {
                 Double lnt = resultSet.getDouble("lnt");
                 Timestamp workDatetime = resultSet.getTimestamp("work_dttm");
                 WifiInfoVo vo = new WifiInfoVo();
+                vo.setDistance(distance);
                 vo.setXSWifiManageNo(XSWifiManageNo);
                 vo.setXSWifiWRDOFC(XSWifiWRDOFC);
                 vo.setXSWifiMainNM(XSWifiMainNM);
@@ -63,6 +78,7 @@ public class WifiInfoDAO {
                 vo.setWorkDatetime(workDatetime);
 
                 list.add(vo);
+                i++;
             }
             resultSet.close();
             statement.close();
@@ -71,6 +87,26 @@ public class WifiInfoDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public void saveDistances(Double myX, Double myY) throws IOException {
+        try {
+            connection = DriverManager.getConnection(url, userId, password);
+            String query = "select x_swifi_mgr_no, lat, lnt from wifi_info";
+            statement = connection.prepareStatement(query);
+            ResultSet set = statement.executeQuery();
+
+            while (set.next()) {
+                String key = set.getNString("x_swifi_mgr_no");
+                Double lat = set.getDouble("lat");
+                Double lnt = set.getDouble("lnt");
+                query = "update wifi_info set distance = " + distance(myX, myY, lat, lnt) + " where x_swifi_mgr_no = '" + key + "'";
+                statement = connection.prepareStatement(query);
+                statement.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public int saveApiData() throws IOException {
@@ -162,7 +198,7 @@ public class WifiInfoDAO {
         dist = rad2deg(dist);
         dist = dist * 60*1.1515*1609.344;
 
-        return dist; //단위 meter
+        return dist / 1000; //단위 Km
     }
     //10진수를 radian(라디안)으로 변환
     private static double deg2rad(double deg){

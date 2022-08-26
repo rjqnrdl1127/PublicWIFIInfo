@@ -57,7 +57,7 @@
                 <td>${lookup.yCoordinate}</td>
                 <td>${lookup.inquiryDate}</td>
                 <td align="center">
-                    <input type="button" value="삭제"/>
+                    <input value="삭제" type="button" onclick="location.href='/del-history.jsp?id=${lookup.id}'"/>
                 </td>
             </tr>
         </c:forEach>

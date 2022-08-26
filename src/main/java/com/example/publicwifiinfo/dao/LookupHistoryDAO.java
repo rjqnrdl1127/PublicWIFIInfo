@@ -68,13 +68,11 @@ public class LookupHistoryDAO {
         return list;
     }
 
-    public void addLookUpData(LookupHistoryVo vo) {
+    public void addLookUpData(BigDecimal lat, BigDecimal lnt) {
         try {
             connection = DriverManager.getConnection(url, userId, password);
-            Long id = vo.getId();
-            BigDecimal xCoordinate = vo.getxCoordinate();
-            BigDecimal yCoordinate = vo.getyCoordinate();
-            Timestamp inquiryDate = vo.getInquiryDate();
+            BigDecimal xCoordinate = lat;
+            BigDecimal yCoordinate = lnt;
 
             String query = "insert into lookup_history";
             query += " (x_coordinate, y_coordinate)";
