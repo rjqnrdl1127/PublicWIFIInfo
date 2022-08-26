@@ -62,7 +62,7 @@
     </style>
 </head>
 <body>
-    <h1>"와이파이 정보 구하기"</h1>
+    <h1>와이파이 정보 구하기</h1>
     <a href="index.jsp">홈</a> |
     <a href="history.jsp">위치 히스토리 목록</a> |
     <a href="load-wifi.jsp">OPen API 와이파이 정보 가져오기</a>
@@ -95,8 +95,15 @@
         </tr>
         <c:if test="${param.lat == null || param.lnt == null}">
             <tr>
-                <td colspan="17" align="center">위치 정보를 입력한 후에 조회해 주세요.</td>
             </tr>
+            <tr>
+                <td colspan="17" align="center">
+                    <p>
+                        위치 정보를 입력한 후에 조회해 주세요.
+                    </p>
+                </td>
+            </tr>
+
         </c:if>
         <c:if test="${param.lat != null && param.lnt != null}">
             <c:set var="list" value="<%=list%>"/>
